@@ -1,12 +1,24 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"strings"
+)
 
 func main() {
-	fmt.Println("Hello, World!")
+	text := "    "
+	fmt.Println(strings.Split(text, " "))
+	fmt.Println(len(strings.Split(text, " ")))
 }
 
 func cleanInput(text string) []string {
-	// TODO Split words based on whitespace
-	return []string{"hello", "world"}
+	if len(text) == 0 {
+		return []string{}
+	}
+
+	lowercased := strings.ToLower(text)
+	trimmed := strings.TrimSpace(lowercased)
+	cleanedInputs := strings.Fields(trimmed)
+
+	return cleanedInputs
 }
