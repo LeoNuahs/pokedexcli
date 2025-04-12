@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"os"
 	"strings"
+
+	"github.com/LeoNuahs/pokedexcli/pokeapi"
 )
 
 type cliCommand struct {
@@ -14,7 +16,6 @@ type cliCommand struct {
 }
 
 func getCommands() map[string]cliCommand {
-	// List of commands
 	return map[string]cliCommand{
 		"exit": {
 			name:        "exit",
@@ -28,20 +29,24 @@ func getCommands() map[string]cliCommand {
 		},
 		"map": {
 			name:        "map",
-			description: "Displays the name of 20 location areas in the Pokemon world",
-			callback:    commandMap,
+			description: "Get the next page of locations",
+			callback:    commandMapf,
 		},
 		"mapb": {
 			name:        "mapb",
-			description: "Displays the name of the previous 20 location areas in the Pokemon world",
+			description: "Get the previous page of locations",
 			callback:    commandMapb,
 		},
 	}
 }
 
-func startRepl() {
-	cfg := config{}
+type config struct {
+	pokeapiClient   pokeapi.Client
+	nextLocationURL *string
+	prevLocationURL *string
+}
 
+func startRepl(cfg *config) {
 	// Read from system
 	reader := bufio.NewScanner(os.Stdin)
 	for {
@@ -60,7 +65,7 @@ func startRepl() {
 			fmt.Printf("Unknown command\n\n")
 			continue
 		} else {
-			err := command.callback(&cfg)
+			err := command.callback(cfg)
 			if err != nil {
 				fmt.Println(err)
 			}
