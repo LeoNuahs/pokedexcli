@@ -8,10 +8,4 @@ type RespShallowLocation struct {
 		Name string `json:"name"`
 		Url  string `json:"results"`
 	} `json:"results"`
-	// Results []LocationArea `json:"results"`
 }
-
-// type LocationArea struct {
-// 	Name string `json:"name"`
-// 	Url  string `json:"url"`
-// }
