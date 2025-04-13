@@ -49,6 +49,7 @@ type config struct {
 	pokeapiClient   pokeapi.Client
 	nextLocationURL *string
 	prevLocationURL *string
+	caughtPokemons  map[string]pokeapi.Pokemon
 }
 
 func startRepl(cfg *config) {
