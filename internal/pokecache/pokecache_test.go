@@ -13,11 +13,11 @@ func TestAddGet(t *testing.T) {
 		val []byte
 	}{
 		{
-			key: "https://example.com",
+			key: "https://pokeapi.co/api/v2",
 			val: []byte("testdata"),
 		},
 		{
-			key: "https://example.com/path",
+			key: "https://pokeapi.co/api/v2/location-area",
 			val: []byte("moretestdata"),
 		},
 	}
@@ -25,14 +25,17 @@ func TestAddGet(t *testing.T) {
 	for i, c := range cases {
 		t.Run(fmt.Sprintf("Test case %v", i), func(t *testing.T) {
 			cache := NewCache(interval)
+
 			cache.Add(c.key, c.val)
 			val, ok := cache.Get(c.key)
+
 			if !ok {
 				t.Errorf("expected to find key")
 				return
 			}
+
 			if string(val) != string(c.val) {
-				t.Errorf("expected to find value")
+				t.Errorf("expected to find value: %v\ninstead found value: %v", c.val, val)
 				return
 			}
 		})
@@ -40,12 +43,13 @@ func TestAddGet(t *testing.T) {
 }
 
 func TestReapLoop(t *testing.T) {
-	const baseTime = 5 * time.Millisecond
-	const waitTime = baseTime + 5*time.Millisecond
-	cache := NewCache(baseTime)
-	cache.Add("https://example.com", []byte("testdata"))
+	const intervalTime = 5 * time.Millisecond
+	const waitTime = intervalTime + 5*time.Millisecond
 
-	_, ok := cache.Get("https://example.com")
+	cache := NewCache(intervalTime)
+	cache.Add("https://pokeapi.co/api/v2/location-area", []byte("testdata"))
+
+	_, ok := cache.Get("https://pokeapi.co/api/v2/location-area")
 	if !ok {
 		t.Errorf("expected to find key")
 		return
@@ -53,9 +57,10 @@ func TestReapLoop(t *testing.T) {
 
 	time.Sleep(waitTime)
 
-	_, ok = cache.Get("https://example.com")
+	_, ok = cache.Get("https://pokeapi.co/api/v2/location-area")
 	if ok {
 		t.Errorf("expected to not find key")
 		return
 	}
+
 }
