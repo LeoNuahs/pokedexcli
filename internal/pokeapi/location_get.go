@@ -28,6 +28,7 @@ func (c *Client) ListLocationAreasPokemons(locArea string) (LocationArea, error)
 	res, err := c.httpClient.Do(req)
 	if res.StatusCode >= 300 {
 		log.Printf("Response failed with status code: %d\n\n", res.StatusCode)
+		return LocationArea{}, err
 	}
 	if err != nil {
 		return LocationArea{}, err

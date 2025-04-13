@@ -31,6 +31,7 @@ func (c *Client) ListLocationAreas(pageURL *string) (ResourceList, error) {
 	res, err := c.httpClient.Do(req)
 	if res.StatusCode >= 300 {
 		log.Printf("Response failed with status code: %d\n\n", res.StatusCode)
+		return ResourceList{}, err
 	}
 	if err != nil {
 		return ResourceList{}, err
