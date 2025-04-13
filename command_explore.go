@@ -7,7 +7,7 @@ import (
 
 func commandExplore(cfg *config, args ...string) error {
 	if len(args) != 1 {
-		errors.New("you must provide a location name")
+		return errors.New("you must provide a location name")
 	}
 
 	name := args[0]
