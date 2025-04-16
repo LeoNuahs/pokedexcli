@@ -32,7 +32,7 @@ func TestCleanInput(t *testing.T) {
 		},
 	}
 
-	for _, c := range cases {
+	for i, c := range cases {
 		actual := cleanInput(c.input)
 		
 		// Check slice lengths
@@ -41,16 +41,16 @@ func TestCleanInput(t *testing.T) {
 			continue
 		}
 		
-		for i := range actual {
-			t.Run(fmt.Sprintf("Test case %d", i), func(t *testing.T){
-				word := actual[i]
-				expectedWord := c.expected[i]
+		t.Run(fmt.Sprintf("Test case %d", i), func(t *testing.T){
+		for j := range actual {
+				word := actual[j]
+				expectedWord := c.expected[j]
 				
 				// Check each word with the expected output
 				if word != expectedWord {
 					t.Errorf("Output mismatch. \n\nExpected Slice: %v\nActual Slice: %v\n\nExpected Word: %v\nActual Word: %v\n\n---------------------------------", c.expected, actual, word, expectedWord)
 				}
-			})
-		}
+			}
+		})
 	}
 }
