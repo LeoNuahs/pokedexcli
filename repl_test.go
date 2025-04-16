@@ -1,6 +1,9 @@
 package main
 
-import "testing"
+import (
+	"fmt"
+	"testing"
+)
 
 func TestCleanInput(t *testing.T) {
 	cases := []struct {
@@ -39,13 +42,15 @@ func TestCleanInput(t *testing.T) {
 		}
 		
 		for i := range actual {
-			word := actual[i]
-			expectedWord := c.expected[i]
-			
-			// Check each word with the expected output
-			if word != expectedWord {
-				t.Errorf("Output mismatch. \n\nExpected Slice: %v\nActual Slice: %v\n\nExpected Word: %v\nActual Word: %v\n\n---------------------------------", c.expected, actual, word, expectedWord)
-			}
+			t.Run(fmt.Sprintf("Test case %d", i), func(t *testing.T){
+				word := actual[i]
+				expectedWord := c.expected[i]
+				
+				// Check each word with the expected output
+				if word != expectedWord {
+					t.Errorf("Output mismatch. \n\nExpected Slice: %v\nActual Slice: %v\n\nExpected Word: %v\nActual Word: %v\n\n---------------------------------", c.expected, actual, word, expectedWord)
+				}
+			})
 		}
 	}
 }
