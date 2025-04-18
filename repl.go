@@ -42,6 +42,11 @@ func getCommands() map[string]cliCommand {
 			description: "Get the list of pokemons in the specified location area",
 			callback:    commandExplore,
 		},
+		"catch": {
+			name:        "catch <pokemon-name>",
+			description: "Catch the specified pokemon. The higher the experience, the more difficult",
+			callback:    commandCatch,
+		},
 	}
 }
 
@@ -54,6 +59,7 @@ type config struct {
 
 func startRepl(cfg *config) {
 	// Read from system
+	cfg.caughtPokemons = map[string]pokeapi.Pokemon{}
 	reader := bufio.NewScanner(os.Stdin)
 	for {
 		fmt.Printf("Pokedex > ")
