@@ -59,7 +59,6 @@ type config struct {
 
 func startRepl(cfg *config) {
 	// Read from system
-	cfg.caughtPokemons = map[string]pokeapi.Pokemon{}
 	reader := bufio.NewScanner(os.Stdin)
 	for {
 		fmt.Printf("Pokedex > ")
