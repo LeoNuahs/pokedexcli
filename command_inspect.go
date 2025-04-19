@@ -1,15 +1,19 @@
 package main
 
 import (
+	"errors"
 	"fmt"
 )
 
 func commandInspect(cfg *config, args ...string) error {
-	name := args[0]
+	if len(args) != 1 {
+		return errors.New("you must provide a pokemon name")
+	}
 
+	name := args[0]
 	pokemon, exists := cfg.caughtPokemons[name]
 	if !exists {
-		return fmt.Errorf("you have not caught a pokemon named %s yet", name)
+		return errors.New("you have not caught that pokemon")
 	}
 
 	fmt.Printf("Name: %v\n", pokemon.Name)
